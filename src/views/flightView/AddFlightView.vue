@@ -6,16 +6,24 @@
     </template>
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
 						<el-form-item prop="flightId">
-							<el-input type="text" placeholder="航班编号" required="required" clearable v-model="ruleForm.flightId" prefix-icon="el-icon-cpu"></el-input>
+							<el-input type="text" placeholder="航班编号" required="required" clearable v-model="ruleForm.flightId" prefix-icon="el-icon-cpu">
+                <template slot="prepend">航班编号</template>
+              </el-input>
 						</el-form-item>
             <el-form-item prop="airplaneId">
-							<el-input type="text" placeholder="飞机号" required="required" clearable v-model="ruleForm.airplaneId" prefix-icon="el-icon-s-promotion"></el-input>
+							<el-input type="text" placeholder="飞机号"  required="required" clearable v-model="ruleForm.airplaneId" prefix-icon="el-icon-s-promotion">
+                 <template slot="prepend">飞机编号</template>
+              </el-input>
 						</el-form-item>
             <el-form-item prop="flightFromPlace">
-              <el-input placeholder="出发地"   type="text" required="required" prefix-icon="el-icon-location-outline"  v-model="ruleForm.flightFromPlace"></el-input>
+              <el-input placeholder="出发地"   type="text" required="required" prefix-icon="el-icon-location-outline"  clearable v-model="ruleForm.flightFromPlace">
+                 <template slot="prepend">出发城市</template>
+              </el-input>
             </el-form-item>
             <el-form-item prop="flightToPlace">
-              <el-input placeholder="到达地" type="text" required="required" prefix-icon="el-icon-location-outline" v-model="ruleForm.flightToPlace"></el-input>
+              <el-input placeholder="到达地" type="text" required="required" prefix-icon="el-icon-location-outline" clearable v-model="ruleForm.flightToPlace">
+               <template slot="prepend">到达城市</template>
+              </el-input>
 						</el-form-item>
             <el-form-item>
 							<el-date-picker v-model="dateTime" type="datetimerange" :picker-options="pickerOptions" 
@@ -24,16 +32,22 @@
               </el-date-picker>
 						</el-form-item>
             <el-form-item prop="flightCompany">
-              <el-input placeholder="航空公司" type="text" required="required" 
-              prefix-icon="el-icon-s-shop" v-model="ruleForm.flightCompany"></el-input>
+              <el-input placeholder="航空公司" type="text" clearable required="required" 
+              prefix-icon="el-icon-s-shop" v-model="ruleForm.flightCompany">
+               <template slot="prepend">航空公司</template>
+              </el-input>
 						</el-form-item>
             <el-form-item prop="flightSeatNum">
-              <el-input placeholder="座位数" type="text" required="required" 
-              prefix-icon="el-icon-s-marketing" v-model="ruleForm.flightSeatNum"></el-input>
+              <el-input placeholder="座位数" type="text" clearable required="required" 
+              prefix-icon="el-icon-s-marketing" v-model="ruleForm.flightSeatNum">
+               <template slot="prepend">座位总数</template>
+              </el-input>
 						</el-form-item>
             <el-form-item prop="flightPrice">
-              <el-input placeholder="航班价格" type="text" required="required" 
-              prefix-icon="el-icon-s-order" v-model="ruleForm.flightPrice"></el-input>
+              <el-input placeholder="航班价格" clearable type="text" required="required" 
+              prefix-icon="el-icon-s-order" v-model="ruleForm.flightPrice">
+                <template slot="prepend">航班价格</template>
+              </el-input>
 						</el-form-item>
 						<el-form-item class="btn-form">
 							<el-button type="primary" @click="submitForm('ruleForm')">新增</el-button>
@@ -56,7 +70,7 @@ export default {
           if(reg.test(value)){
           	callback()
           }else{
-            callback(new Error('航班编号不合法'))
+            callback(new Error('航班编号不合法,请输入两个字母开头+6个数字的组合'))
           }
 				}
 			}
@@ -68,7 +82,7 @@ export default {
 					if (reg.test(value)) {
 						callback()
 					} else {
-						callback(new Error('请输入正确的飞机号'))
+						callback(new Error('请输入正确的飞机号，飞机号三个数字的组合'))
 					}
 				}
 			}

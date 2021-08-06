@@ -289,10 +289,19 @@ export default {
       searchBillById(billId){
         let that=this
         GetBillById(billId).then(function(res){
+          console.log(res)
+          if(res.data){
           that.showPage=false
           that.billInfo.splice(0)
           that.changeObj(res.data)
           that.billInfo.push(res.data)
+          }else{
+            that.$alert('未查询到相应订单', '提示', {
+             confirmButtonText: '确定',
+          }); 
+           that.showPage=false
+          that.billInfo.splice(0)
+          }
         }).catch((err)=>{
           that.$alert('请求失败，请联系服务器管理人员', '提示', {
              confirmButtonText: '确定',
@@ -303,9 +312,17 @@ export default {
       searchBillByDate(billDate){
          let that=this
          GetBillByDate(billDate).then(function(res){
+           if(res.data.length){
           that.showPage=false
           that.changeState(res.data)
           that.billInfo=res.data
+           }else{
+             that.$alert('未查询到相应订单', '提示', {
+             confirmButtonText: '确定',
+          }); 
+           that.showPage=false
+          that.billInfo.splice(0)
+           }
          }).catch((err)=>{
             that.$alert('请求失败，请联系服务器管理人员', '未知错误', {
             confirmButtonText: '确定',
@@ -315,9 +332,17 @@ export default {
       searchBillByUserName(userName){
         let that=this
         GetBillByUserName(userName).then(function(res){
+          if(res.data.length){
           that.showPage=false
           that.changeState(res.data)
           that.billInfo=res.data
+          }else{
+            that.$alert('未查询到相应订单', '提示', {
+             confirmButtonText: '确定',
+          }); 
+           that.showPage=false
+           that.billInfo.splice(0)
+          }
          }).catch((err)=>{
             that.$alert('请求失败，请联系服务器管理人员', '未知错误', {
             confirmButtonText: '确定',

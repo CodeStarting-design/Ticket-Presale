@@ -123,6 +123,11 @@ export default {
   methods:{
     searchFlight(){
       let that=this
+      if(this.checkForm.flightFromPlace==''||this.checkForm.flightToPlace==''||this.checkForm.flightDepartureTime==''){
+         that.$alert('请输入完整的航班信息', '提示', {
+          confirmButtonText: '确定',
+        });
+      }else{
      GetFlightByPlace(this.checkForm).then(function(res){
        if(res.data.length){
          that.showCard=false
@@ -138,6 +143,7 @@ export default {
            confirmButtonText: '确定',
         });
      })
+    }
     },
     goBack(){
       this.showCard=true

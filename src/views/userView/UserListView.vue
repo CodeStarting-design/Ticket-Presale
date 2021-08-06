@@ -143,7 +143,7 @@ export default {
         if(value===''){
           callback(new Error('手机号不能为空'))
         }else{
-          const phonereg = 11 && /^((13|14|15|16|17|18|19)[0-9]{1}\d{8})$/
+          const phonereg = /^1\d{10}$/
           if(phonereg.test(value)){
              callback()
           }else{

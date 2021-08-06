@@ -6,22 +6,34 @@
     </template>
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
 						<el-form-item prop="userName">
-							<el-input type="text" placeholder="用户名" required="required" clearable v-model="ruleForm.userName" prefix-icon="el-icon-user-solid"></el-input>
+							<el-input type="text" placeholder="用户名" required="required" clearable v-model="ruleForm.userName" prefix-icon="el-icon-user-solid">
+                <template slot="prepend">&nbsp;用户姓名&nbsp;&nbsp;</template>
+              </el-input>
 						</el-form-item>
 						<el-form-item prop="userZfbNumber">
-							<el-input class="phone-input" placeholder="支付宝账号" clearable v-model="ruleForm.userZfbNumber" prefix-icon="el-icon-message"></el-input>
+							<el-input class="phone-input" placeholder="支付宝账号" clearable v-model="ruleForm.userZfbNumber" prefix-icon="el-icon-message">
+                 <template slot="prepend">支付宝账号</template>
+              </el-input>
 						</el-form-item>
 						<el-form-item prop="userPassword">
-							<el-input type="password" placeholder="请输入密码" show-password clearable  v-model="ruleForm.userPassword" prefix-icon="el-icon-lock"></el-input>
+							<el-input type="password" placeholder="请输入密码" show-password clearable  v-model="ruleForm.userPassword" prefix-icon="el-icon-lock">
+                <template slot="prepend">&nbsp;用户密码&nbsp;&nbsp;</template>
+              </el-input>
 						</el-form-item>
 						<el-form-item prop="checkPass">
-							<el-input type="password" placeholder="请再次输入密码" show-password clearable  v-model="ruleForm.checkPass" prefix-icon="el-icon-lock"></el-input>
+							<el-input type="password" placeholder="请再次输入密码" show-password clearable  v-model="ruleForm.checkPass" prefix-icon="el-icon-lock">
+                <template slot="prepend">&nbsp;确认密码&nbsp;&nbsp;</template>
+              </el-input>
 						</el-form-item>
             <el-form-item  prop="userPhone">
-               <el-input placeholder="请输入手机号" v-model.number="ruleForm.userPhone"  prefix-icon="el-icon-mobile-phone" clearable></el-input>
+               <el-input placeholder="请输入手机号" v-model.number="ruleForm.userPhone"  prefix-icon="el-icon-mobile-phone" clearable>
+                   <template slot="prepend">&nbsp;手机号码&nbsp;&nbsp;</template>
+               </el-input>
             </el-form-item>
             <el-form-item  prop="userId">
-               <el-input placeholder="请输入身份证号" v-model.number="ruleForm.userId"  prefix-icon="el-icon-s-finance" clearable></el-input>
+               <el-input placeholder="请输入身份证号" v-model.number="ruleForm.userId"  prefix-icon="el-icon-s-finance" clearable>
+                   <template slot="prepend">&nbsp;身份证号&nbsp;&nbsp;</template>
+               </el-input>
             </el-form-item>            
 						<el-form-item class="btn-form">
 							<el-button type="primary" @click="submitForm('ruleForm')">新增</el-button>

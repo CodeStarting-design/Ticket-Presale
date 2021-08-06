@@ -6,19 +6,21 @@
     </template>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
             <el-form-item prop="userNumber">
-							<el-input type="text" placeholder="管理员账号" required="required" clearable v-model="ruleForm.userNumber" prefix-icon="el-icon-user-solid"></el-input>
+							<el-input type="text" placeholder="管理员账号" required="required" clearable v-model="ruleForm.userNumber" prefix-icon="el-icon-user-solid">
+                 <template slot="prepend">&nbsp;&nbsp;&nbsp;账号&nbsp;&nbsp;&nbsp;&nbsp;</template>
+              </el-input>
 						</el-form-item>
-						<el-form-item prop="userName">
-							<el-input type="text" placeholder="管理员名称" required="required" clearable v-model="ruleForm.userName" prefix-icon="el-icon-s-comment"></el-input>
+						<el-form-item prop="userName" >
+							<el-input type="text" placeholder="管理员名称" required="required" clearable v-model="ruleForm.userName" prefix-icon="el-icon-s-comment"><template slot="prepend">&nbsp;&nbsp;&nbsp;名称&nbsp;&nbsp;&nbsp;&nbsp;</template></el-input>
 						</el-form-item>
 						<el-form-item prop="userPassword">
-							<el-input type="password" placeholder="请输入密码" show-password clearable  v-model="ruleForm.userPassword" prefix-icon="el-icon-lock"></el-input>
+							<el-input type="password" placeholder="请输入密码" show-password clearable  v-model="ruleForm.userPassword" prefix-icon="el-icon-lock"><template slot="prepend">&nbsp;&nbsp;&nbsp;密码&nbsp;&nbsp;&nbsp;&nbsp;</template></el-input>
 						</el-form-item>
 						<el-form-item prop="checkPass">
-							<el-input type="password" placeholder="请再次输入密码" show-password clearable  v-model="ruleForm.checkPass" prefix-icon="el-icon-lock"></el-input>
+							<el-input type="password" placeholder="请再次输入密码" show-password clearable  v-model="ruleForm.checkPass" prefix-icon="el-icon-lock"><template slot="prepend">确认密码</template></el-input>
 						</el-form-item>
             <el-form-item prop="adminKey">
-              <el-input type="password" placeholder="请输入管理员邀请码" show-password clearable v-model="ruleForm.adminKey" prefix-icon="el-icon-paperclip"></el-input>
+              <el-input type="password" placeholder="请输入管理员邀请码" show-password clearable v-model="ruleForm.adminKey" prefix-icon="el-icon-paperclip"><template slot="prepend">&nbsp;邀请码&nbsp;&nbsp;</template></el-input>
             </el-form-item>
 						<el-form-item class="btn-form">
 							<el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
