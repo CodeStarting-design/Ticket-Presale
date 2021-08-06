@@ -1,12 +1,42 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-if="isRouterAlive"/>
   </div>
 </template>
 
+<script>
+export default {
+  name: 'App',
+	provide(){
+		return{
+			reload:this.reload
+		}
+	},
+	data(){
+		return{
+			isRouterAlive:true
+		}
+	},
+	methods: {
+		reload() {
+			this.isRouterAlive=false
+			this.$nextTick(function(){
+				this.isRouterAlive=true
+			})
+		}
+	},
+  mounted() {
+  let that = this;
+  window.onresize=function() {
+    that.$store.state.screenWidth = document.documentElement.clientWidth; //窗口宽度
+    that.$store.state.screenHeight = document.documentElement.clientHeight; //窗口高度
+  }
+}
+}
+</script>
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: ”Microsoft YaHei”,Arial,Helvetica,sans-serif,”宋体”;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

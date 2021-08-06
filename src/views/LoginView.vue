@@ -29,19 +29,29 @@
   </div>
 </template>
 <script>
-
+import { LoginRequest } from '../network/requuest.js'
 export default {
   name: "LoginView",
   data() {
+      var valiadateNumber=(rule,value,callback)=>{
+        let reg = /^[A-Za-z0-9]{3,18}$/; 
+      if (value === '') {
+					callback(new Error('请输入账号'))
+				} else if(!reg.test(value)){
+					callback(new Error('账号必须是3-18位字母加数字的组合'))
+				} else {
+          callback()
+        }
+      }    
     return {
       loginForm: {
-        username: null,
+        username: "",
         password: ""
       },
       rules: {
         username: [
-          { required: true, message: '请输入账号', trigger: 'blur'},
-          {min: 5, max: 10, message: '长度在 5 到 10 个字符', trigger: 'blur'}
+          { required: true,  trigger: 'blur',validator:valiadateNumber},
+          {min: 3, max: 18, message: '长度在 3 到 18 个字符', trigger: 'blur'}
         ],
         password: [
           {required: true, message: '请输入密码', trigger: 'blur'},
@@ -53,7 +63,47 @@ export default {
   methods: {
     login() {
       let that=this;
-      that.$router.push('/echartsview')
+      LoginRequest(that.loginForm.username).then(
+        function(res){
+          if(res.data==""){
+            that.$alert('账号不存在，请先注册', '提示', {
+            confirmButtonText: '确定',
+            callback: action => {
+          }
+        });
+          }else{
+          if(res.data.adminPassword==that.loginForm.password){
+            let adminData=res.data
+            function userObj(adminData){                
+              this.adminName=adminData.adminName
+              this.adminNumber=adminData.adminNumber
+              this.adminPassword=adminData.adminPassword
+            }
+            let admin=new userObj(adminData)
+            that.$store.commit({
+              type:'adminLogin',
+              admin:admin
+            }) 
+            that.$message({
+              showClose: true,
+              message: '登录成功',
+              type: 'success'
+            });           
+            that.$router.push('/echartsview')
+          }else{
+            that.$alert('账号密码错误', '提示', {
+            confirmButtonText: '确定',
+            callback: action => {
+             }
+           });
+          }
+          }
+     }
+     ).catch((err)=>{
+        that.$alert('请求失败，请联系服务器管理人员', '提示', {
+        confirmButtonText: '确定',
+      });       
+     })
     },
     register() {
        this.$router.push('/registerview')

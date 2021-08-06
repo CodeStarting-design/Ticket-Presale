@@ -5,8 +5,11 @@
       <span class="login-title">管理员注册</span>
     </template>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+            <el-form-item prop="userNumber">
+							<el-input type="text" placeholder="管理员账号" required="required" clearable v-model="ruleForm.userNumber" prefix-icon="el-icon-user-solid"></el-input>
+						</el-form-item>
 						<el-form-item prop="userName">
-							<el-input type="text" placeholder="管理员名称" required="required" clearable v-model="ruleForm.userName" prefix-icon="el-icon-user-solid"></el-input>
+							<el-input type="text" placeholder="管理员名称" required="required" clearable v-model="ruleForm.userName" prefix-icon="el-icon-s-comment"></el-input>
 						</el-form-item>
 						<el-form-item prop="userPassword">
 							<el-input type="password" placeholder="请输入密码" show-password clearable  v-model="ruleForm.userPassword" prefix-icon="el-icon-lock"></el-input>
@@ -26,6 +29,7 @@
 </div>
 </template>
 <script>
+import {RegisterQequest} from '../network/requuest.js'
 export default {
   name:"RegisterView",
   data() {
@@ -56,6 +60,16 @@ export default {
 				}
 
 			}
+      var valiadateNumber=(rule,value,callback)=>{
+        let reg = /^[A-Za-z0-9]{3,18}$/; 
+      if (value === '') {
+					callback(new Error('请输入注册账号'))
+				} else if(!reg.test(value)){
+					callback(new Error('注册账号必须是3-18位字母加数字的组合'))
+				} else {
+          callback()
+        }
+      }
 
 			return {
 				show: true,
@@ -66,10 +80,21 @@ export default {
           checkPass: '',
 					userName: '',
 					userPassword: '',
+          userNumber:'',
           adminKey:''
 				},
 				rules: {
-					
+					userNumber:[{
+           required:true,
+           validator:valiadateNumber,
+           trigger:'blur'
+          },
+          {
+         	    min: 3,
+							max: 18, 
+              message: '长度在 3到 18 个字符',
+							trigger: 'blur'
+          }],
 					userName: [{
 						required: true,
 						validator: validateUser1,
@@ -111,6 +136,49 @@ export default {
       },
        submitForm(formName) {
          let that=this
+         this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let admin={}
+            admin.adminNumber=this.ruleForm.userNumber
+            admin.adminPassword=this.ruleForm.userPassword
+            admin.adminName=this.ruleForm.userName
+            if(this.ruleForm.adminKey==''){
+               that.$alert('请输入管理员邀请码', '提示', {
+                  confirmButtonText: '确定',
+               });
+            }else if(this.ruleForm.adminKey!='44796'){
+               that.$alert('管理员邀请码错误，请重试', '提示', {
+                  confirmButtonText: '确定',
+               });
+            }else{
+            RegisterQequest(admin).then(function(res){
+             if(res.data){
+                that.$alert('注册成功，您的登录账号是'+that.ruleForm.userNumber+'请使用该账号进行登录', '提示', {
+                  confirmButtonText: '确定',
+                });
+                that.$router.push('/loginview')                
+             }else{
+                  that.$alert('注册失败，请核对您的账号', '提示', {
+                  confirmButtonText: '确定',
+              });
+             }
+            }
+            ).catch((err)=>{
+              that.$alert('请求失败，请联系服务器管理人员', '提示', {
+              confirmButtonText: '确定',
+              });              
+            })
+            }
+          } else {
+           this.$alert('注册信息不合法，请检查', '提示', {
+            confirmButtonText: '确定',
+            callback: action => {
+             }
+           });
+            return false;
+          }
+        });
+
 
       },
     }
