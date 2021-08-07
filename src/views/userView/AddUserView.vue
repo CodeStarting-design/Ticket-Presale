@@ -198,7 +198,7 @@ export default {
                   });
                  that.$router.push('/userlistview')
                }else{
-                 that.$alert('新增失败，请重试', '提示', {
+                 that.$alert('身份证号重复，请重试', '提示', {
                     confirmButtonText: '确定',
                  });
                }

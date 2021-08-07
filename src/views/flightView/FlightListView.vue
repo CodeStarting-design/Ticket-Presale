@@ -6,7 +6,7 @@
       </el-input>
       <el-button type="primary" icon="el-icon-search"  @click="searchFlight" autofocus style="margin-right: 15px;">查 找</el-button>
     <el-tooltip class="item" effect="dark" :content="(showTravled?'显示全部航班':'显示未出行航班')" placement="top-start">
-        <el-checkbox v-model="showTravled" label="change" border @change="showTravledFlight" v-show="showPage"></el-checkbox>
+        <el-checkbox v-model="showTravled" label="显示未出行航班" border @change="showTravledFlight" v-show="showPage"></el-checkbox>
     </el-tooltip>
     </div>
      <el-table

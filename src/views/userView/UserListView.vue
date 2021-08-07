@@ -15,7 +15,7 @@
       </el-input>
       <el-button type="primary" icon="el-icon-search"  @click="searchUser" autofocus style="margin-right: 15px;">查 找</el-button>
     <el-tooltip class="item" effect="dark" :content="(showDelete?'显示全部用户':'显示可删除用户')" placement="top-start">
-        <el-checkbox v-model="showDelete" label="change" border @change="showDeleteUser" v-show="showPage"></el-checkbox>
+        <el-checkbox v-model="showDelete" label="显示可删除" border @change="showDeleteUser" v-show="showPage"></el-checkbox>
     </el-tooltip>
     </div>
      <el-table
@@ -420,13 +420,15 @@ export default {
       searchDeleteUser(userId){
         let that=this
         GetDeleteUser(userId).then(function(res){
+          
           if(res.data===''){
             that.$alert('未查询到符合条件的用户', '提示', {
              confirmButtonText: '确定',
             });
             that.userInfo=null                
           }else{
-           that.userInfo=res.data
+           that.userInfo.splice(0)
+           that.userInfo.push(res.data)
           }
            that.showPage=false;
         }).catch((err)=>{

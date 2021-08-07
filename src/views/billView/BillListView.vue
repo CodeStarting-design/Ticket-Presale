@@ -289,7 +289,6 @@ export default {
       searchBillById(billId){
         let that=this
         GetBillById(billId).then(function(res){
-          console.log(res)
           if(res.data){
           that.showPage=false
           that.billInfo.splice(0)

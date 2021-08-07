@@ -19,7 +19,7 @@
 
         <el-form-item class="dateTime">
           <el-date-picker v-model="checkForm.flightDepartureTime" type="datetime" 
-          value-format="yyyy-MM-dd HH:mm:ss" style="width:100%"
+          value-format="yyyy-MM-dd HH:mm:ss" format="yyyy-MM-dd" style="width:100%"
           placeholder="选择出发时间"></el-date-picker>
         </el-form-item>
 
