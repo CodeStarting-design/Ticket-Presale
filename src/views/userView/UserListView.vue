@@ -92,7 +92,7 @@
 <el-dialog title="编辑用户信息" :visible.sync="dialogFormVisible" :before-close="dialogClose">
    <el-form :model="editUserInfo" status-icon :rules="rules" ref="editUserInfo" >
      <el-form-item  label="用户账号">
-				<el-input type="text" v-model="editUserInfo.userAccountNumber"   prefix-icon="el-icon-user-solid" :readonly="true"></el-input>
+				<el-input type="text" v-model="editUserInfo.userAccountNumber"   prefix-icon="el-icon-user-solid" :readonly="true" disabled></el-input>
 		</el-form-item>
     <el-form-item  label="用户姓名" prop="userName" >
 				<el-input type="text"   v-model="editUserInfo.userName" prefix-icon="el-icon-user-solid" clearable ></el-input>

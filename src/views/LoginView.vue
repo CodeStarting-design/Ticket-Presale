@@ -5,7 +5,7 @@
         <span class="login-title">管理员登录</span>
       </template>
 
-      <el-form :model="loginForm" :rules="rules"  :status-icon="true">
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" :status-icon="true">
 
         <el-form-item prop="username">
           <el-input placeholder="账号" clearable v-model="loginForm.username" prefix-icon="el-icon-user-solid">
@@ -19,7 +19,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button class="button-login" @click="login">登录</el-button>
+          <el-button class="button-login" @click="login('loginForm')">登录</el-button>
         </el-form-item>
 
         <span class="user-register" @click="register">管理员注册</span>
@@ -61,49 +61,57 @@ export default {
     }
   },
   methods: {
-    login() {
+    login(loginForm) {
       let that=this;
-      LoginRequest(that.loginForm.username).then(
-        function(res){
-          if(res.data==""){
-            that.$alert('账号不存在，请先注册', '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
-          }
-        });
-          }else{
-          if(res.data.adminPassword==that.loginForm.password){
-            let adminData=res.data
-            function userObj(adminData){                
-              this.adminName=adminData.adminName
-              this.adminNumber=adminData.adminNumber
-              this.adminPassword=adminData.adminPassword
-            }
-            let admin=new userObj(adminData)
-            that.$store.commit({
-              type:'adminLogin',
-              admin:admin
-            }) 
-            that.$message({
-              showClose: true,
-              message: '登录成功',
-              type: 'success'
-            });           
-            that.$router.push('/echartsview')
-          }else{
-            that.$alert('账号密码错误', '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
+      this.$refs[loginForm].validate((valid)=>{
+        if(valid){
+          LoginRequest(that.loginForm.username).then(
+          function(res){
+            if(res.data==""){
+              that.$alert('账号不存在，请先注册', '提示', {
+              confirmButtonText: '确定',
+              callback: action => {
              }
            });
-          }
-          }
-     }
-     ).catch((err)=>{
-        that.$alert('请求失败，请联系服务器管理人员', '提示', {
-        confirmButtonText: '确定',
-      });       
-     })
+           }else{
+           if(res.data.adminPassword==that.loginForm.password){
+             let adminData=res.data
+             function userObj(adminData){                
+               this.adminName=adminData.adminName
+               this.adminNumber=adminData.adminNumber
+               this.adminPassword=adminData.adminPassword
+             }
+             let admin=new userObj(adminData)
+             that.$store.commit({
+               type:'adminLogin',
+              admin:admin
+             }) 
+             that.$message({
+               showClose: true,
+               message: '登录成功',
+               type: 'success'
+             });           
+             that.$router.push('/echartsview')
+           }else{
+             that.$alert('账号密码错误', '提示', {
+             confirmButtonText: '确定',
+             callback: action => {
+              }
+            });
+           }
+           }
+         }
+         ).catch((err)=>{
+          that.$alert('请求失败，请联系服务器管理人员', '提示', {
+           confirmButtonText: '确定',
+         });       
+        })
+      }else{
+        that.$alert('请输入完整的账号密码以登录', '提示', {
+           confirmButtonText: '确定',
+        });  
+      }
+    })
     },
     register() {
        this.$router.push('/registerview')

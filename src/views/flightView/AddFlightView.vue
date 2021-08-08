@@ -211,6 +211,13 @@ export default {
         this.$router.push('/flightlistview')
       },
        submitForm(formName) {
+         if(this.dateTime==''){
+           this.$alert('请输入航班时间，请检查', '提示', {
+            confirmButtonText: '确定',
+            callback: action => {
+             }
+           });
+         }else{
         let that=this
         this.ruleForm.flightDepartureTime=this.dateTime[0]
         this.ruleForm.flightArriveTime=this.dateTime[1]
@@ -243,6 +250,7 @@ export default {
             return false;
           }
         });
+      }
       },
     }
 }

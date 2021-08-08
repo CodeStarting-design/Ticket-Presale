@@ -160,7 +160,7 @@ export default {
                 });
                 that.$router.push('/loginview')                
              }else{
-                  that.$alert('注册失败，请核对您的账号', '提示', {
+                  that.$alert('注册失败，帐号重复，请修改', '提示', {
                   confirmButtonText: '确定',
               });
              }
